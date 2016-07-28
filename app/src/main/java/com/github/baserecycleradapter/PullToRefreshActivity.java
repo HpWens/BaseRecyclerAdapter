@@ -149,16 +149,16 @@ public class PullToRefreshActivity extends AppCompatActivity implements SwipeRef
                 switch (position) {
                     default:
                     case 0:
-                        mAdapter.setLoadType(LoadType.CUSTOM);
+                        mAdapter.setLoadMoreType(LoadType.CUSTOM);
                         break;
                     case 1:
-                        mAdapter.setLoadType(LoadType.CUBES);
+                        mAdapter.setLoadMoreType(LoadType.CUBES);
                         break;
                     case 2:
-                        mAdapter.setLoadType(LoadType.SWAP);
+                        mAdapter.setLoadMoreType(LoadType.SWAP);
                         break;
                     case 3:
-                        mAdapter.setLoadType(LoadType.EAT_BEANS);
+                        mAdapter.setLoadMoreType(LoadType.EAT_BEANS);
                         break;
                 }
                 btnLoadType.setText(stringItems[position]);

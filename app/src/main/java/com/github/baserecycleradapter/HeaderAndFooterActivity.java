@@ -6,11 +6,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
+import com.github.library.callback.SimpleItemTouchHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +49,15 @@ public class HeaderAndFooterActivity extends AppCompatActivity {
         addHeaderView();
 
         addFooterView();
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelper(mAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     private void addFooterView() {
-        View headerView=getLayoutInflater().inflate(R.layout.rv_footer, null);
-        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+        View headerView = getLayoutInflater().inflate(R.layout.rv_footer, null);
+        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mAdapter.addFooterView(headerView);
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +68,8 @@ public class HeaderAndFooterActivity extends AppCompatActivity {
     }
 
     private void addHeaderView() {
-        View headerView=getLayoutInflater().inflate(R.layout.rv_header, null);
-        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+        View headerView = getLayoutInflater().inflate(R.layout.rv_header, null);
+        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mAdapter.addHeaderView(headerView);
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,8 +81,8 @@ public class HeaderAndFooterActivity extends AppCompatActivity {
 
     public static List<String> getItemDatas() {
         List<String> mList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            mList.add("欢迎关注文淑的博客");
+        for (int i = 0; i < 20; i++) {
+            mList.add("" + i);
         }
         return mList;
     }

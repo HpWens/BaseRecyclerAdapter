@@ -20,6 +20,7 @@ import com.github.library.animation.SlideInBottomAnimation;
 import com.github.library.animation.SlideInLeftAnimation;
 import com.github.library.animation.SlideInRightAnimation;
 import com.github.library.animation.SlideInTopAnimation;
+import com.github.library.listener.OnMoveAndSwipedListener;
 import com.github.library.listener.OnRecyclerItemClickListener;
 import com.github.library.listener.OnRecyclerItemLongClickListener;
 import com.github.library.listener.RequestLoadMoreListener;
@@ -27,12 +28,15 @@ import com.github.library.view.FooterView;
 import com.github.library.view.LoadType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by jms on 2016/7/19.
  */
-public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements OnMoveAndSwipedListener {
+
     protected Context mContext;
     protected int mLayoutResId;
     protected LayoutInflater mLayoutInflater;
@@ -61,11 +65,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     private View mEmptyView;
     private View mLoadView;
 
-    private static final int VIEW_TYPE_HEADER = 0x00000001;//header
-    private static final int VIEW_TYPE_CONTENT = 0x00000002;//content
-    private static final int VIEW_TYPE_FOOTER = 0x00000003;//footer
-    private static final int VIEW_TYPE_EMPTY = 0x00000004;//empty
-    private static final int VIEW_TYPE_LOADING = 0x00000005;//loading
+    protected static final int VIEW_TYPE_HEADER = 0x00000001;//header
+    protected static final int VIEW_TYPE_CONTENT = 0x00000002;//content
+    protected static final int VIEW_TYPE_FOOTER = 0x00000003;//footer
+    protected static final int VIEW_TYPE_EMPTY = 0x00000004;//empty
+    protected static final int VIEW_TYPE_LOADING = 0x00000005;//loading
 
     private static final int DEFAULT_DURATION = 300;
 
@@ -84,6 +88,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         this.mBaseAnimation = new BaseAnimation[]{new CustomAnimation()};
 
         this.mLoadType = LoadType.CUSTOM;
+
     }
 
     /**
@@ -591,7 +596,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     /**
      * @param loadType
      */
-    public void setLoadType(LoadType loadType) {
+    public void setLoadMoreType(LoadType loadType) {
         this.mLoadType = loadType;
     }
 
@@ -633,6 +638,28 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
      */
     public View getEmptyView() {
         return mEmptyView;
+    }
+
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        int from = fromPosition - getHeaderViewCount();
+        int to = toPosition - getHeaderViewCount();
+        Collections.swap(mData, from, to);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        int type = getItemViewType(position);
+        if (type == VIEW_TYPE_EMPTY || type == VIEW_TYPE_HEADER || type == VIEW_TYPE_FOOTER
+                || type == VIEW_TYPE_LOADING) {
+            notifyDataSetChanged();
+            return;
+        }
+        int pos = position - getHeaderViewCount();
+        remove(pos);
     }
 
     /**
