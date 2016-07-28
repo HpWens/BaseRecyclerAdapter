@@ -33,7 +33,7 @@ compile 'com.github.baserecycleradapter:library:1.0.7'
 
 ```
 
-方式二：下载[源码](https://github.com/HpWens/BaseRecyclerAdapter)，添加 **library**库到你项目当中。
+方式二：添加 **library**库到你项目当中。
 
 
 ##BaseRecyclerAdapter 使用
@@ -205,6 +205,6 @@ mAdapter.addHeaderView(headerView);
 
 ----------
 
-[源码传送门](https://github.com/HpWens/BaseRecyclerAdapter)
+如果对你有帮助，还请给star哟。
 
 欢迎加入**478720016**来帮助更多的人。
