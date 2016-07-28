@@ -205,6 +205,6 @@ mAdapter.addHeaderView(headerView);
 
 ----------
 
-如果对你有帮助，还请给star哟。
+如果对你有帮助，还请给star哟。 我的博客地址http://blog.csdn.net/u012551350/article/details/52026740
 
-欢迎加入**478720016**来帮助更多的人。
+欢迎加入**478720016**群来帮助更多的人。
