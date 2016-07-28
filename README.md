@@ -99,7 +99,7 @@ mAdapter.addHeaderView(headerView);
 
 ###添加 Item动画
 
-![recy](http://img.blog.csdn.net/20160728114134232)    
+![recy](https://github.com/HpWens/WSLoadingView/blob/develop/app/photos/anim.gif)    
 
 ```
  //一行代码开启动画 默认CUSTOM动画
