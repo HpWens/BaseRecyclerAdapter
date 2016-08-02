@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     case 4:
                         intent = new Intent(MainActivity.this, EmptyActivity.class);
                         break;
+                    case 5:
+                        intent = new Intent(MainActivity.this, DragAndSwipeActivity.class);
+                        break;
                 }
                 startActivity(intent);
             }
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mList.add("ItemAnimation Adapter");
         mList.add("PullToRefresh Adapter");
         mList.add("Empty Adapter");
+        mList.add("Drag And Swipe Adapter");
         return mList;
     }
 }

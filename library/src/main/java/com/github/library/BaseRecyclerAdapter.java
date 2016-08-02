@@ -2,10 +2,15 @@ package com.github.library;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -20,7 +25,7 @@ import com.github.library.animation.SlideInBottomAnimation;
 import com.github.library.animation.SlideInLeftAnimation;
 import com.github.library.animation.SlideInRightAnimation;
 import com.github.library.animation.SlideInTopAnimation;
-import com.github.library.listener.OnMoveAndSwipedListener;
+import com.github.library.listener.OnDragAndSwipeListener;
 import com.github.library.listener.OnRecyclerItemClickListener;
 import com.github.library.listener.OnRecyclerItemLongClickListener;
 import com.github.library.listener.RequestLoadMoreListener;
@@ -34,9 +39,7 @@ import java.util.List;
 /**
  * Created by jms on 2016/7/19.
  */
-public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements OnMoveAndSwipedListener {
-
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnDragAndSwipeListener {
     protected Context mContext;
     protected int mLayoutResId;
     protected LayoutInflater mLayoutInflater;
@@ -65,13 +68,20 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     private View mEmptyView;
     private View mLoadView;
 
-    protected static final int VIEW_TYPE_HEADER = 0x00000001;//header
-    protected static final int VIEW_TYPE_CONTENT = 0x00000002;//content
-    protected static final int VIEW_TYPE_FOOTER = 0x00000003;//footer
-    protected static final int VIEW_TYPE_EMPTY = 0x00000004;//empty
-    protected static final int VIEW_TYPE_LOADING = 0x00000005;//loading
+    private static final int VIEW_TYPE_HEADER = 0x00000001;//header
+    private static final int VIEW_TYPE_CONTENT = 0x00000002;//content
+    private static final int VIEW_TYPE_FOOTER = 0x00000003;//footer
+    private static final int VIEW_TYPE_EMPTY = 0x00000004;//empty
+    private static final int VIEW_TYPE_LOADING = 0x00000005;//loading
 
     private static final int DEFAULT_DURATION = 300;
+    private static final int DEFAULT_DRAG_VIEW = 0;
+    private static final float ALPHA_255 = 1.0f;
+
+    private ItemTouchHelper mItemTouchHelper;
+    private int mDragViewId = DEFAULT_DRAG_VIEW;
+    private int mSelectedColor = Color.parseColor("#303F9F");
+    private Drawable mBackgroundDrawable;
 
     private RequestLoadMoreListener mRequestLoadMoreListener;
     private OnRecyclerItemClickListener onRecyclerItemClickListener;
@@ -88,7 +98,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         this.mBaseAnimation = new BaseAnimation[]{new CustomAnimation()};
 
         this.mLoadType = LoadType.CUSTOM;
-
     }
 
     /**
@@ -180,6 +189,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             case VIEW_TYPE_CONTENT:
                 baseViewHolder = new BaseViewHolder(mLayoutInflater.inflate(mLayoutResId, parent, false));
                 initItemClickListener(baseViewHolder);
+                mBackgroundDrawable = baseViewHolder.getConvertView().getBackground();
                 break;
             case VIEW_TYPE_FOOTER:
                 baseViewHolder = new BaseViewHolder(mFooterView);
@@ -195,7 +205,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         mViewType = holder.getItemViewType();
         switch (mViewType) {
             case VIEW_TYPE_HEADER:
@@ -213,6 +223,28 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
                 addLoadMore();
                 break;
         }
+
+        if (mItemTouchHelper != null && mViewType == VIEW_TYPE_CONTENT) {
+            if (mDragViewId != DEFAULT_DRAG_VIEW) {
+                View dragView = ((BaseViewHolder) holder).getView(mDragViewId);
+                if (dragView != null) {
+                    dragView.setTag(holder);
+                    dragView.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            if (MotionEventCompat.getActionMasked(motionEvent) == MotionEvent.ACTION_DOWN) {
+                                if (mItemTouchHelper != null) {
+                                    mItemTouchHelper.startDrag((RecyclerView.ViewHolder) view.getTag());
+                                }
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                }
+            }
+        }
+
     }
 
     /**
@@ -601,6 +633,27 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     }
 
     /**
+     * @param itemTouchHelper
+     */
+    public void setItemTouchHelper(ItemTouchHelper itemTouchHelper) {
+        this.mItemTouchHelper = itemTouchHelper;
+    }
+
+    /**
+     * @param viewId
+     */
+    public void setDragViewId(int viewId) {
+        this.mDragViewId = viewId;
+    }
+
+    /**
+     * @param selectedColor
+     */
+    public void setSelectedColor(int selectedColor) {
+        this.mSelectedColor = selectedColor;
+    }
+
+    /**
      * @param isNextLoad
      */
     public void notifyDataChangeAfterLoadMore(boolean isNextLoad) {
@@ -640,26 +693,44 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         return mEmptyView;
     }
 
+    @Override
+    public void onItemSwipeAlpha(RecyclerView.ViewHolder viewHolder, float dX) {
+        final float alpha = ALPHA_255 - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
+        viewHolder.itemView.setAlpha(alpha);
+        viewHolder.itemView.setTranslationX(dX);
+    }
 
     @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
-        int from = fromPosition - getHeaderViewCount();
-        int to = toPosition - getHeaderViewCount();
-        Collections.swap(mData, from, to);
+    public void onItemClear(RecyclerView.ViewHolder viewHolder) {
+        viewHolder.itemView.setBackgroundDrawable(mBackgroundDrawable);
+    }
+
+    @Override
+    public void onItemSelected(RecyclerView.ViewHolder viewHolder) {
+        viewHolder.itemView.setBackgroundColor(mSelectedColor);
+    }
+
+    @Override
+    public boolean onItemDrag(int fromPosition, int toPosition) {
+        //交换mData中数据的位置
+        Collections.swap(mData, fromPosition - getHeaderViewCount(), toPosition - getHeaderViewCount());
+        //交换RecyclerView列表中item的位置
         notifyItemMoved(fromPosition, toPosition);
         return true;
     }
 
     @Override
-    public void onItemDismiss(int position) {
+    public void onItemSwipe(int position) {
         int type = getItemViewType(position);
-        if (type == VIEW_TYPE_EMPTY || type == VIEW_TYPE_HEADER || type == VIEW_TYPE_FOOTER
-                || type == VIEW_TYPE_LOADING) {
+        if (!(type == VIEW_TYPE_EMPTY || type == VIEW_TYPE_HEADER || type == VIEW_TYPE_FOOTER
+                || type == VIEW_TYPE_LOADING)) {
+            //删除mData中数据
+            mData.remove(position - getHeaderViewCount());
+            //删除RecyclerView列表对应item
+            notifyItemRemoved(position);
+        } else {
             notifyDataSetChanged();
-            return;
         }
-        int pos = position - getHeaderViewCount();
-        remove(pos);
     }
 
     /**
