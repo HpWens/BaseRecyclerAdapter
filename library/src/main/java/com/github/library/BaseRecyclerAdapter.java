@@ -62,17 +62,19 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     private boolean mHeadAndEmptyEnable; // headerView and emptyView
     private boolean mFootAndEmptyEnable;// footerView and emptyView
     private boolean mEmptyEnable;
+    private boolean mMultiItemTypeEnable;
 
+    private View mContentView;
     private View mHeaderView;
     private View mFooterView;
     private View mEmptyView;
     private View mLoadView;
 
-    private static final int VIEW_TYPE_HEADER = 0x00000001;//header
-    private static final int VIEW_TYPE_CONTENT = 0x00000002;//content
-    private static final int VIEW_TYPE_FOOTER = 0x00000003;//footer
-    private static final int VIEW_TYPE_EMPTY = 0x00000004;//empty
-    private static final int VIEW_TYPE_LOADING = 0x00000005;//loading
+    private static final int VIEW_TYPE_HEADER = 0x00001111;//header
+    private static final int VIEW_TYPE_CONTENT = 0x00002222;//content
+    private static final int VIEW_TYPE_FOOTER = 0x00003333;//footer
+    private static final int VIEW_TYPE_EMPTY = 0x00004444;//empty
+    private static final int VIEW_TYPE_LOADING = 0x00005555;//loading
 
     private static final int DEFAULT_DURATION = 300;
     private static final int DEFAULT_DRAG_VIEW = 0;
@@ -80,7 +82,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
 
     private ItemTouchHelper mItemTouchHelper;
     private int mDragViewId = DEFAULT_DRAG_VIEW;
-    private int mSelectedColor = Color.parseColor("#303F9F");
+    private int mSelectedColor = Color.LTGRAY;
     private Drawable mBackgroundDrawable;
 
     private RequestLoadMoreListener mRequestLoadMoreListener;
@@ -98,6 +100,10 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         this.mBaseAnimation = new BaseAnimation[]{new CustomAnimation()};
 
         this.mLoadType = LoadType.CUSTOM;
+    }
+
+    public BaseRecyclerAdapter(Context context, List<T> data) {
+        this(context, data, 0);
     }
 
     /**
@@ -173,9 +179,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         }
         //type content
         else if (position - getHeaderViewCount() >= 0) {
+            if (mMultiItemTypeEnable)
+                return getMultiItemViewType(position - getHeaderViewCount());
             return VIEW_TYPE_CONTENT;
         }
         return super.getItemViewType(position - getHeaderViewCount());
+    }
+
+    protected int getMultiItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     @Override
@@ -187,8 +199,9 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
                 break;
             default:
             case VIEW_TYPE_CONTENT:
-                baseViewHolder = new BaseViewHolder(mLayoutInflater.inflate(mLayoutResId, parent, false));
+                baseViewHolder = onBaseViewHolder(parent, viewType);
                 initItemClickListener(baseViewHolder);
+                // get default background drawable
                 mBackgroundDrawable = baseViewHolder.getConvertView().getBackground();
                 break;
             case VIEW_TYPE_FOOTER:
@@ -245,6 +258,34 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             }
         }
 
+    }
+
+    /**
+     * @param parent
+     */
+    protected BaseViewHolder onBaseViewHolder(ViewGroup parent, int viewType) {
+        return createBaseViewHolder(parent, mLayoutResId);
+    }
+
+    /**
+     * @param parent
+     * @param layoutResId
+     * @return
+     */
+    protected BaseViewHolder createBaseViewHolder(ViewGroup parent, int layoutResId) {
+        if (mContentView == null) {
+            return new BaseViewHolder(getItemView(layoutResId, parent));
+        }
+        return new BaseViewHolder(mContentView);
+    }
+
+    /**
+     * @param layoutResId
+     * @param parent
+     * @return
+     */
+    protected View getItemView(int layoutResId, ViewGroup parent) {
+        return mLayoutInflater.inflate(layoutResId, parent, false);
     }
 
     /**
@@ -391,6 +432,13 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     public void openLoadingMore(int pageSize, boolean enable) {
         this.pageSize = pageSize;
         this.mNextLoadingEnable = enable;
+    }
+
+    /**
+     * @param multiItemTypeEnable
+     */
+    public void openMultiItemType(boolean multiItemTypeEnable) {
+        this.mMultiItemTypeEnable = multiItemTypeEnable;
     }
 
     /**

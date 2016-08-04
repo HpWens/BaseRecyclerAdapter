@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
                     case 5:
                         intent = new Intent(MainActivity.this, DragAndSwipeActivity.class);
                         break;
+                    case 6:
+                        intent = new Intent(MainActivity.this, MultiItemActivity.class);
+                        break;
                 }
                 startActivity(intent);
             }
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mList.add("PullToRefresh Adapter");
         mList.add("Empty Adapter");
         mList.add("Drag And Swipe Adapter");
+        mList.add("Multi Item Adapter");
         return mList;
     }
 }
