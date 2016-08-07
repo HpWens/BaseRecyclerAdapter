@@ -1,13 +1,20 @@
 package com.github.baserecycleradapter;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.github.baserecycleradapter.entity.MultiItem;
 import com.github.library.BaseMultiItemAdapter;
@@ -17,19 +24,25 @@ import com.github.library.BaseViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Created by jms on 2016/8/4.
+ * Created by Administrator on 7/27 0027.
  */
 public class MultiItemActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private BaseRecyclerAdapter<String> mAdapter;
+    private BaseRecyclerAdapter<MultiItem> mAdapter;
+
+    private EditText etChat;
+    private Button btnSend;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_header_and_footer);
+        setContentView(R.layout.activity_multi);
 
+        btnSend = (Button) findViewById(R.id.btn_send);
+        etChat = (EditText) findViewById(R.id.et_chat);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
@@ -38,83 +51,84 @@ public class MultiItemActivity extends AppCompatActivity {
             @Override
             protected void convert(BaseViewHolder helper, MultiItem item) {
                 switch (helper.getItemViewType()) {
-                    case MultiItem.TEXT:
-                        helper.setText(R.id.tv_item_text, item.content);
+                    case MultiItem.SEND:
+                        helper.setText(R.id.chat_from_content, item.content);
+                        //helper.setImageBitmap(R.id.chat_from_icon,getRoundCornerBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.chat_head), 16));
                         break;
-
-                    case MultiItem.IMG:
-
-                        break;
-
-                    case MultiItem.IMGS:
-
+                    case MultiItem.FROM:
+                        helper.setText(R.id.chat_send_content, item.content);
+                        //helper.setImageBitmap(R.id.chat_send_icon,getRoundCornerBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.from_head), 16));
                         break;
                 }
             }
 
             @Override
             protected void addItemLayout() {
-                addItemType(MultiItem.TEXT, R.layout.rv_item);
-                addItemType(MultiItem.IMG, R.layout.item_image);
-                addItemType(MultiItem.IMGS, R.layout.item_images);
+                addItemType(MultiItem.SEND, R.layout.chat_send_msg);
+                addItemType(MultiItem.FROM, R.layout.chat_from_msg);
             }
         });
 
-        mAdapter.openLoadAnimation(false);
+        mAdapter.openLoadAnimation(true);
 
-        addHeaderView();
-
-        addFooterView();
-
-    }
-
-    private void addFooterView() {
-        View headerView = getLayoutInflater().inflate(R.layout.rv_footer, null);
-        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        mAdapter.addFooterView(headerView);
-        headerView.setOnClickListener(new View.OnClickListener() {
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "your click footerView", Snackbar.LENGTH_SHORT).show();
+                MultiItem multiItem = new MultiItem();
+                multiItem.itemType = MultiItem.SEND;
+                multiItem.content = etChat.getText().toString();
+                mAdapter.add(multiItem);
+
+                mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount());
+                //mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
             }
         });
     }
 
-    private void addHeaderView() {
-        View headerView = getLayoutInflater().inflate(R.layout.rv_header, null);
-        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        mAdapter.addHeaderView(headerView);
-        headerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "your click headerView", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public static List<String> getItemDatas() {
-        List<String> mList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            mList.add("欢迎关注文淑的博客");
-        }
-        return mList;
-    }
 
     public static List<MultiItem> getMultiItemDatas() {
         List<MultiItem> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 100; i++) {
             MultiItem multiItem = new MultiItem();
-            String str = null;
-            multiItem.itemType = MultiItem.IMG;
             if (i % 2 == 0) {
-                str = "hello world";
-                multiItem.itemType = MultiItem.TEXT;
-            } else if (i % 3 == 0) {
-                multiItem.itemType = MultiItem.IMGS;
+                multiItem.itemType = MultiItem.SEND;
+                multiItem.content = "海，妹子约吗";
+            } else {
+                multiItem.itemType = MultiItem.FROM;
+                multiItem.content = "大哥，你别怕";
             }
-            multiItem.content = str;
             list.add(multiItem);
         }
         return list;
     }
+
+    /**
+     * @param bitmap 原图
+     * @param pixels 圆角大小
+     * @return
+     */
+    public Bitmap getRoundCornerBitmap(Bitmap bitmap, float pixels) {
+        //获取bitmap的宽高
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        Bitmap cornerBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(cornerBitmap);
+        paint.setAntiAlias(true);
+
+        canvas.drawRoundRect(new RectF(0, 0, width, height), pixels, pixels, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, null, new RectF(0, 0, width, height), paint);
+
+        //绘制边框
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(6);
+        paint.setColor(Color.GREEN);
+        canvas.drawRoundRect(new RectF(0, 0, width, height), pixels, pixels, paint);
+
+        return cornerBitmap;
+    }
+
+
 }
