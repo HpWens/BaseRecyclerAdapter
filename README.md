@@ -295,13 +295,6 @@ public static List<MultiItem> getMultiItemDatas() {
 
 [源码传送门](https://github.com/HpWens/BaseRecyclerAdapter)
 
-如果对你有所帮助请给**star**
-
-欢迎加入**478720016**来帮助更多的人。
-![recy](http://img.blog.csdn.net/20160728130843978)
-
-----------
-
 如果对你有帮助，还请给star哟。 我的博客地址http://blog.csdn.net/u012551350/article/details/52026740
 
 欢迎加入**478720016**群来帮助更多的人。
