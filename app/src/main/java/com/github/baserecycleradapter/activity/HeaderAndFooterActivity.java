@@ -1,4 +1,4 @@
-package com.github.baserecycleradapter;
+package com.github.baserecycleradapter.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.baserecycleradapter.R;
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
 
@@ -51,10 +52,10 @@ public class HeaderAndFooterActivity extends AppCompatActivity {
     }
 
     private void addFooterView() {
-        View headerView = getLayoutInflater().inflate(R.layout.rv_footer, null);
-        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        mAdapter.addFooterView(headerView);
-        headerView.setOnClickListener(new View.OnClickListener() {
+        View footerView = getLayoutInflater().inflate(R.layout.rv_footer, null);
+        footerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        mAdapter.addFooterView(footerView);
+        footerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "your click footerView", Snackbar.LENGTH_SHORT).show();

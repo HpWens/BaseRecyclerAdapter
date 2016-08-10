@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.NavigationActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -17,20 +17,22 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".HeaderAndFooterActivity">
+        <activity android:name=".activity.HeaderAndFooterActivity">
         </activity>
-        <activity android:name=".AnimationActivity">
+        <activity android:name=".activity.AnimationActivity">
         </activity>
-        <activity android:name=".ItemAnimationActivity">
+        <activity android:name=".activity.ItemAnimationActivity">
         </activity>
-        <activity android:name=".PullToRefreshActivity">
+        <activity android:name=".activity.PullToRefreshActivity">
         </activity>
-        <activity android:name=".EmptyActivity">
+        <activity android:name=".activity.EmptyActivity">
         </activity>
-        <activity android:name=".DragAndSwipeActivity">
+        <activity android:name=".activity.DragAndSwipeActivity">
     </activity>
-        <activity android:name=".MultiItemActivity">
-        </activity>
+        <activity android:name=".activity.MultiItemActivity">
+    </activity>
+        <!--<activity android:name=".activity.NavigationActivity">-->
+        <!--</activity>-->
     </application>
 
 </manifest>

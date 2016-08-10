@@ -1,4 +1,4 @@
-package com.github.baserecycleradapter;
+package com.github.baserecycleradapter.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.github.baserecycleradapter.R;
 import com.github.baserecycleradapter.entity.MultiItem;
 import com.github.library.BaseMultiItemAdapter;
 import com.github.library.BaseRecyclerAdapter;

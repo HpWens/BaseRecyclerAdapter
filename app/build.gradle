@@ -32,4 +32,6 @@ dependencies {
 
     //compile 'com.github.baserecycleradapter:library:1.0.9'
     compile project(':library')
+
+    compile 'com.github.promeg:tinypinyin:1.0.0' // ~80KB
 }

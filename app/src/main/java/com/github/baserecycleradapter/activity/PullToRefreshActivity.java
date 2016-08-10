@@ -1,4 +1,4 @@
-package com.github.baserecycleradapter;
+package com.github.baserecycleradapter.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
+import com.github.baserecycleradapter.R;
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
 import com.github.library.listener.RequestLoadMoreListener;

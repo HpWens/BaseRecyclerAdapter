@@ -1,4 +1,4 @@
-package com.github.baserecycleradapter;
+package com.github.baserecycleradapter.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.github.baserecycleradapter.R;
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
 import com.github.library.listener.OnRecyclerItemClickListener;
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
                     case 6:
                         intent = new Intent(MainActivity.this, MultiItemActivity.class);
                         break;
+                    case 7:
+                        intent = new Intent(MainActivity.this, NavigationActivity.class);
+                        break;
                 }
                 startActivity(intent);
             }
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         mList.add("Empty Adapter");
         mList.add("Drag And Swipe Adapter");
         mList.add("Multi Item Adapter");
+        mList.add("Navigation Adapter");
         return mList;
     }
 }

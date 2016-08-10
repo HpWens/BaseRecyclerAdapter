@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 
 import com.github.library.animation.AlphaInAnimation;
 import com.github.library.animation.AnimationType;
@@ -48,6 +49,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     private int mLastPosition = -1;
     private int mViewType = -1;
     private int pageSize = -1;
+    private int mItemHeight;
 
     private int mDuration = DEFAULT_DURATION;
     private boolean mOpenAnimationEnable = true;
@@ -65,7 +67,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     private boolean mMultiItemTypeEnable;
 
     private View mContentView;
-    private View mHeaderView;
+    //private View mHeaderView;
+    private LinearLayout mHeaderLayout;
     private View mFooterView;
     private View mEmptyView;
     private View mLoadView;
@@ -137,7 +140,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     @Override
     public int getItemViewType(int position) {
 
-        if (mHeaderView != null && position == 0) {
+        if (mHeaderLayout != null && position == 0) {
             return VIEW_TYPE_HEADER;
         }
 
@@ -148,23 +151,23 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             // three situation   {@link #setEmptyView(header + empty + footer , header + empty , empty+footer)}  position = 1
             if ((mHeadAndEmptyEnable || mFootAndEmptyEnable) && position == 1) {
 
-                if (mHeaderView == null && mFooterView != null) { //empty+footer
+                if (mHeaderLayout == null && mFooterView != null) { //empty+footer
                     return VIEW_TYPE_FOOTER;
-                } else if (mHeaderView != null && mEmptyView != null) {  //header + empty + footer , header + empty
+                } else if (mHeaderLayout != null && mEmptyView != null) {  //header + empty + footer , header + empty
                     return VIEW_TYPE_EMPTY;
                 }
             }
             //two situation   position = 0
             else if (position == 0) {
-                if (mHeaderView == null) {
+                if (mHeaderLayout == null) {
                     return VIEW_TYPE_EMPTY;
                 } else {
                     return VIEW_TYPE_HEADER;
                 }
-            } else if (position == 2 && mHeaderView != null && mFooterView != null) {
+            } else if (position == 2 && mHeaderLayout != null && mFooterView != null) {
                 return VIEW_TYPE_FOOTER;
             } else if (position == 1) {
-                if (mHeaderView != null) {
+                if (mHeaderLayout != null) {
                     return VIEW_TYPE_EMPTY;
                 }
                 return VIEW_TYPE_FOOTER;
@@ -195,7 +198,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
         BaseViewHolder baseViewHolder = null;
         switch (viewType) {
             case VIEW_TYPE_HEADER:
-                baseViewHolder = new BaseViewHolder(mHeaderView);
+                baseViewHolder = new BaseViewHolder(mHeaderLayout);
                 break;
             default:
             case VIEW_TYPE_CONTENT:
@@ -285,7 +288,11 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
      * @return
      */
     protected View getItemView(int layoutResId, ViewGroup parent) {
-        return mLayoutInflater.inflate(layoutResId, parent, false);
+        View view = mLayoutInflater.inflate(layoutResId, parent, false);
+        if (mItemHeight != 0) {
+            view.getLayoutParams().height = mItemHeight;
+        }
+        return view;
     }
 
     /**
@@ -513,6 +520,13 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     }
 
     /**
+     * @param itemHeight
+     */
+    public void setItemHeight(int itemHeight) {
+        this.mItemHeight = itemHeight;
+    }
+
+    /**
      * @param data
      */
     public void addData(List<T> data) {
@@ -538,8 +552,9 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
      * @return
      */
     public int getHeaderViewCount() {
-        return mHeaderView == null ? 0 : 1;
+        return mHeaderLayout == null ? 0 : 1;
     }
+
 
     /**
      * @return
@@ -600,7 +615,18 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
      * @param header
      */
     public void addHeaderView(View header) {
-        this.mHeaderView = header;
+        if (mHeaderLayout == null) {
+            mHeaderLayout = new LinearLayout(mContext);
+            mHeaderLayout.setOrientation(LinearLayout.VERTICAL);
+            mHeaderLayout.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+        try {
+            this.mHeaderLayout.addView(header);
+        } catch (RuntimeException e) {
+            this.mHeaderLayout.removeAllViews();
+            this.mHeaderLayout.addView(header);
+        }
         this.notifyDataSetChanged();
     }
 
@@ -723,8 +749,8 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     /**
      * @return
      */
-    public View getHeaderView() {
-        return mHeaderView;
+    public LinearLayout getHeaderLayout() {
+        return mHeaderLayout;
     }
 
     /**
