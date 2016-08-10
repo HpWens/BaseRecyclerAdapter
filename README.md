@@ -4,7 +4,7 @@ RecyclerView 是Android L版本中新添加的一个用来取代ListView的SDK�
 
 看到这里你肯定会有疑问，通用适配（BaseRecyclerAdapter），它具体能够做些什么呢，或者说它都有哪些功能？
 
-##BaseRecyclerAdapter 简介
+##一、BaseRecyclerAdapter 简介
 
 -  优化Adapter代码
 
@@ -22,6 +22,10 @@ RecyclerView 是Android L版本中新添加的一个用来取代ListView的SDK�
 
 - 添加空布局（列表无数据时，显示更加人性化）
 
+- 拖拽和侧滑删除
+
+- 支持多类型布局
+
 看了 BaseRecyclerAdapter的特性，接着来看看外面如何在项目中导入（依赖）它。
 
 ##BaseRecyclerAdapter 导入（依赖）
@@ -29,11 +33,11 @@ RecyclerView 是Android L版本中新添加的一个用来取代ListView的SDK�
 方式一：build.gradle 的 dependencies 添加如下代码：
 
 ```
-compile 'com.github.baserecycleradapter:library:1.0.7'
+compile 'com.github.baserecycleradapter:library:1.0.9'
 
 ```
 
-方式二：添加 **library**库到你项目当中。
+方式二：下载[源码](https://github.com/HpWens/BaseRecyclerAdapter)，添加 **library**库到你项目当中。
 
 
 ##BaseRecyclerAdapter 使用
@@ -99,7 +103,7 @@ mAdapter.addHeaderView(headerView);
 
 ###添加 Item动画
 
-![recy](https://github.com/HpWens/WSLoadingView/blob/develop/app/photos/anim.gif)    
+![recy](http://img.blog.csdn.net/20160728114134232)    
 
 ```
  //一行代码开启动画 默认CUSTOM动画
@@ -204,6 +208,92 @@ mAdapter.addHeaderView(headerView);
 ![recy](http://img.blog.csdn.net/20160728130843978)
 
 ----------
+
+###拖拽和侧滑
+
+添加以下代码：
+
+```
+ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+
+ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
+
+mAdapter.setItemTouchHelper(mItemTouchHelper);
+
+mAdapter.setDragViewId(R.id.iv_drag);
+
+mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+```
+
+![recycler](http://img.blog.csdn.net/20160802232514813)
+
+----------
+
+###支持不同类型
+
+```
+mRecyclerView.setAdapter(mAdapter = new BaseMultiItemAdapter<MultiItem>(this, getMultiItemDatas()) {
+    @Override
+    protected void convert(BaseViewHolder helper, MultiItem item) {
+        switch (helper.getItemViewType()) {
+            case MultiItem.SEND:
+                helper.setText(R.id.chat_from_content, item.content);
+                //helper.setImageBitmap(R.id.chat_from_icon,getRoundCornerBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.chat_head), 16));
+                break;
+            case MultiItem.FROM:
+                helper.setText(R.id.chat_send_content, item.content);
+                //helper.setImageBitmap(R.id.chat_send_icon,getRoundCornerBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.from_head), 16));
+                break;
+        }
+    }
+    @Override
+    protected void addItemLayout() {
+        addItemType(MultiItem.SEND, R.layout.chat_send_msg);
+        addItemType(MultiItem.FROM, R.layout.chat_from_msg);
+    }
+});
+mAdapter.openLoadAnimation(true);
+btnSend.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        MultiItem multiItem = new MultiItem();
+        multiItem.itemType = MultiItem.SEND;
+        multiItem.content = etChat.getText().toString();
+        mAdapter.add(multiItem);
+        mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount());
+        //mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+    }
+});
+```
+数据源：
+
+```
+public static List<MultiItem> getMultiItemDatas() {
+    List<MultiItem> list = new ArrayList<>();
+    for (int i = 0; i < 100; i++) {
+        MultiItem multiItem = new MultiItem();
+        if (i % 2 == 0) {
+            multiItem.itemType = MultiItem.SEND;
+            multiItem.content = "海，妹子约吗";
+        } else {
+            multiItem.itemType = MultiItem.FROM;
+            multiItem.content = "大哥，你别怕";
+        }
+        list.add(multiItem);
+    }
+    return list;
+}
+```
+
+![recycler](http://img.blog.csdn.net/20160807195219773)
+
+这样就轻松实现了聊天界面。
+
+这样简单的配置就可以实现多类型布局，不需要你写格外的代码。
+
+敬请大家的关注，后期会一直维护本库，有什么好的想法，可以提出来。我们互相学习进度。
+
+[源码传送门](https://github.com/HpWens/BaseRecyclerAdapter)
 
 如果对你有帮助，还请给star哟。 我的博客地址http://blog.csdn.net/u012551350/article/details/52026740
 
