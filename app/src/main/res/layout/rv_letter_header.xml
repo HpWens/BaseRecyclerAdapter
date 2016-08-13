@@ -4,15 +4,15 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <include layout="@layout/layout_sticky_header"/>
-
     <TextView
-        android:id="@+id/tv_city"
+        android:id="@+id/tv_letter_header"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:background="@color/colorAccent"
         android:gravity="center_vertical"
-        android:padding="8dp"
-        android:text="成都"
+        android:paddingLeft="16dp"
+        android:text="A"
+        android:textColor="#FFF"
         android:textSize="16sp"/>
 
 </LinearLayout>
