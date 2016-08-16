@@ -44,10 +44,10 @@ public class EmptyActivity extends AppCompatActivity {
 
     private void addEmptyView() {
 
-        View headerView=getLayoutInflater().inflate(R.layout.rv_empty, null);
-        headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-        mAdapter.addHeaderView(headerView);
-        headerView.setOnClickListener(new View.OnClickListener() {
+        View emptyView=getLayoutInflater().inflate(R.layout.rv_empty, null);
+        emptyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+        mAdapter.addEmptyView(emptyView);
+        emptyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "your click empty", Snackbar.LENGTH_SHORT).show();
