@@ -4,12 +4,13 @@ import com.github.baserecycleradapter.entity.City;
 
 import java.util.Comparator;
 
+
 /**
- * Created by jms on 2016/8/10.
+ * Created by Administrator on 8/10 0010.
  */
-public class PinyinComparator implements Comparator<City> {
+public class PinYinComparator implements Comparator<City> {
     @Override
-    public int compare(City lhs, City rhs) {
-        return lhs.cityPinYin.compareTo(rhs.cityPinYin);
+    public int compare(City city, City t1) {
+        return city.cityPinYin.compareTo(t1.cityPinYin);
     }
 }

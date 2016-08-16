@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.NavigationActivity"
+            android:name=".activity.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -31,8 +31,8 @@
     </activity>
         <activity android:name=".activity.MultiItemActivity">
     </activity>
-        <!--<activity android:name=".activity.NavigationActivity">-->
-        <!--</activity>-->
+        <activity android:name=".activity.NavigationActivity">
+        </activity>
     </application>
 
 </manifest>

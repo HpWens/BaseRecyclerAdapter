@@ -30,8 +30,7 @@ dependencies {
     compile 'com.flyco.dialog:FlycoDialog_Lib:1.2.6@aar'
     compile 'com.nineoldandroids:library:2.4.0'
 
-    //compile 'com.github.baserecycleradapter:library:1.0.9'
     compile project(':library')
-
+    //compile 'com.github.baserecycleradapter:library:1.1.0'
     compile 'com.github.promeg:tinypinyin:1.0.0' // ~80KB
 }
