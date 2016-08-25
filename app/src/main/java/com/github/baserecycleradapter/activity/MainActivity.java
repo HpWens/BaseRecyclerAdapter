@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
                     case 7:
                         intent = new Intent(MainActivity.this, NavigationActivity.class);
                         break;
+                    case 8:
+                        intent = new Intent(MainActivity.this, CustomRefreshActivity.class);
+                        break;
                 }
                 startActivity(intent);
             }
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         mList.add("Drag And Swipe Adapter");
         mList.add("Multi Item Adapter");
         mList.add("Navigation Adapter");
+        mList.add("Custom Refresh Adapter");
         return mList;
     }
 }

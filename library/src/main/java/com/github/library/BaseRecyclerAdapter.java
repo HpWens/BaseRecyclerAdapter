@@ -621,13 +621,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
             mHeaderLayout.setLayoutParams(new ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
-        try {
-            this.mHeaderLayout.addView(header);
-        } catch (RuntimeException e) {
-            this.mHeaderLayout.removeAllViews();
-            this.mHeaderLayout.addView(header);
+        if (header != null) {
+            try {
+                this.mHeaderLayout.addView(header);
+            } catch (RuntimeException e) {
+                this.mHeaderLayout.removeAllViews();
+                this.mHeaderLayout.addView(header);
+            }
+            this.notifyDataSetChanged();
         }
-        this.notifyDataSetChanged();
     }
 
 

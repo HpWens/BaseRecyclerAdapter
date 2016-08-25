@@ -28,10 +28,12 @@
         <activity android:name=".activity.EmptyActivity">
         </activity>
         <activity android:name=".activity.DragAndSwipeActivity">
-    </activity>
+        </activity>
         <activity android:name=".activity.MultiItemActivity">
-    </activity>
+        </activity>
         <activity android:name=".activity.NavigationActivity">
+        </activity>
+        <activity android:name=".activity.CustomRefreshActivity">
         </activity>
     </application>
 
