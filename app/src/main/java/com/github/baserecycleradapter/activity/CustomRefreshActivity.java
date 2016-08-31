@@ -13,6 +13,7 @@ import com.github.baserecycleradapter.R;
 import com.github.library.BaseRecyclerAdapter;
 import com.github.library.BaseViewHolder;
 import com.github.library.listener.OnRecyclerItemClickListener;
+import com.github.library.listener.RequestLoadMoreListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class CustomRefreshActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<String>(this, getItemDatas(), R.layout.rv_item) {
             @Override
             protected void convert(BaseViewHolder helper, String item) {
-                helper.setText(R.id.tv_item_text, item);
+                helper.setText(R.id.tv_item_text, item + helper.getAdapterPosition());
             }
         });
         mAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
@@ -58,18 +59,31 @@ public class CustomRefreshActivity extends AppCompatActivity {
                 mMyHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        mAdapter.setData(getItemDatas());
                         mRecyclerView.refreshComplete();
+                    }
+                }, 5000);
+            }
+        });
+
+        mAdapter.openLoadingMore(true);
+        mAdapter.setOnLoadMoreListener(new RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                mMyHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataChangeAfterLoadMore(getItemDatas(), true);
                     }
                 }, 2000);
             }
         });
-
     }
 
 
     public static List<String> getItemDatas() {
         List<String> mList = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 6; i++) {
             mList.add("文淑的博客欢迎你");
         }
         return mList;

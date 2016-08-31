@@ -3,7 +3,6 @@ package com.github.baserecycleradapter.widget;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.github.baserecycleradapter.R;
 
@@ -27,7 +25,7 @@ public class PullRefreshLoadView extends LinearLayout {
 
     private ImageView mArrowIv;  //箭头
 
-    private TextView mStatusTv;  //下拉刷新  释放刷新  刷新完成
+    private TextGradientView mStatusTv;  //下拉刷新  释放刷新  刷新完成
 
     private BallSpinFadeLoader mLoader;  //loading 图标
 
@@ -75,7 +73,7 @@ public class PullRefreshLoadView extends LinearLayout {
         setGravity(Gravity.BOTTOM);
 
         mArrowIv = (ImageView) mContainer.findViewById(R.id.iv_arrow);
-        mStatusTv = (TextView) mContainer.findViewById(R.id.tv_refresh_status);
+        mStatusTv = (TextGradientView) mContainer.findViewById(R.id.tv_refresh_status);
         mLoader = (BallSpinFadeLoader) mContainer.findViewById(R.id.ball_loader);
 
         mArrowDownAnim = new RotateAnimation(180.0f, 0.0f,
@@ -184,6 +182,7 @@ public class PullRefreshLoadView extends LinearLayout {
             }
             mArrowIv.clearAnimation();
             mStatusTv.setText(REFRESHING);
+            mStatusTv.startAnimator();
             mLoader.setVisibility(View.VISIBLE);
             mArrowIv.setVisibility(View.INVISIBLE);
         } else if (state == STATE_PULL_TO_REFRESH) {
