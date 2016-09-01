@@ -204,6 +204,7 @@ public class PullRefreshLoadView extends LinearLayout {
             }
         } else if (state == STATE_REFRESHED) {
             mArrowIv.clearAnimation();
+            mStatusTv.stopAnimator();
             mStatusTv.setText(REFRESHED);
             mArrowIv.setVisibility(View.INVISIBLE);
             mLoader.setVisibility(View.INVISIBLE);

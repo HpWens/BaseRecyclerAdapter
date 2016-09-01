@@ -25,10 +25,11 @@ public class TextGradientView extends View {
     private float mAnimatorValue;
     private ValueAnimator mAnimator;
     private LinearGradient mLinearGradient;
+    private boolean mGradientEnable;
 
     private String mTextStr;
 
-    private final static String DEFAULT_TEXT = "正在刷新...";
+    private final static String DEFAULT_TEXT = "下拉刷新";
 
     public TextGradientView(Context context) {
         this(context, null);
@@ -58,13 +59,16 @@ public class TextGradientView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        mPaint.setShader(mLinearGradient = new LinearGradient(0, 0, mAnimatorValue, mAnimatorValue, mColors,
-                mPositions, Shader.TileMode.CLAMP));
+        if (mGradientEnable) {
+            mPaint.setShader(mLinearGradient = new LinearGradient(0, 0, mAnimatorValue, mAnimatorValue, mColors,
+                    mPositions, Shader.TileMode.CLAMP));
+        }
         canvas.drawText(mTextStr, 0, -mPaint.getFontMetrics().top, mPaint);
     }
 
     public void startAnimator() {
         float textWidth = getWidth();
+        mGradientEnable = true;
         mAnimator = ValueAnimator.ofFloat(0f, textWidth);
         mAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mAnimator.setRepeatMode(ValueAnimator.RESTART);
@@ -81,6 +85,8 @@ public class TextGradientView extends View {
 
     public void stopAnimator() {
         if (mAnimator != null) {
+            mGradientEnable = false;
+            mPaint.setShader(new LinearGradient(0, 0, 0, 0, 0xff000000, 0xff000000, Shader.TileMode.CLAMP));
             mAnimatorValue = 0;
             clearAnimation();
             mAnimator.setRepeatCount(1);
