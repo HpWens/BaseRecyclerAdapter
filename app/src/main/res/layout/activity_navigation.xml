@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#c3c9ce">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <include
+        layout="@layout/rv_letter_header"></include>
+
+    <com.github.library.widget.LetterNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"/>
+
+    <TextView
+        android:id="@+id/tv_letter_hide"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:background="@drawable/letter_circle_bg"
+        android:gravity="center"
+        android:text="A"
+        android:textColor="#FFF"
+        android:textSize="32sp"
+        android:visibility="gone"/>
+
+</FrameLayout>
