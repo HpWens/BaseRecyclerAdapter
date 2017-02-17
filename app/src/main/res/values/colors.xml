@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
+    <!--536DFE-->
+    <color name="colorAccent">#F44336</color>
+
+    <color name="rippelColor">#FFFFFF</color>
+
+    <color name="transparent_background">#00000000</color>
+    <color name="goods_bg_alpha">#F1F1F1</color>
+    <color name="actionbar_bg">#FF0099CC</color>
+    <color name="statusbar_bg">#FF006080</color>
+
+    <color name="tab_unselect">#c9c9c9</color>
+
+    <color name="check_text">#757575</color>
+    <color name="amount_text">#3d4245</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="tab_bg">#F7F7F7</color>
+    <color name="black">#000000</color>
+    <color name="category_column0">#F1F1F1</color>
+    <color name="gray">#8c8c8c</color>
+    <color name="view_bg">#eeeeee</color>
+    <color name="view_line_bg">#f2f2f2</color>
+
+</resources>

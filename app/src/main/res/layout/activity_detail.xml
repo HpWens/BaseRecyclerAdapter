@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/toolbar"/>
+
+
+    <include layout="@layout/content_detail"/>
+
+    <LinearLayout
+        android:id="@+id/linear_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_custom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_custom_service"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:text="客服"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_collection"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_collection"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:text="收藏"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_shopping_cart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/ic_shopping_cart"
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:text="购物车"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_cart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="#ffa800"
+            android:gravity="center"
+            android:text="加入进货车"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="#ff4242"
+            android:gravity="center"
+            android:text="立即采购"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

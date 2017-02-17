@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_welcome"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_gravity="right"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3秒  跳过"/>
+
+</FrameLayout>

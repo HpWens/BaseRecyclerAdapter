@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/db_48"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="@string/select_address"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/view_line_bg"></TextView>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/ic_order_address"
+        android:drawablePadding="8dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="2dp"
+        android:maxLines="2"
+        android:paddingBottom="10dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="10dp"
+        android:text="暂无收货地址"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_other_address"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@mipmap/ic_button_bg"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="其他收货地址"
+            android:textColor="#393939"/>
+
+        <Button
+            android:id="@+id/tv_add_address"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginLeft="8dp"
+            android:background="@mipmap/ic_button_bg"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:text="添加收货地址"
+            android:textColor="#393939"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/view_line_bg"></TextView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/db_48"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="选择支付方式"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/view_line_bg"></TextView>
+
+    <LinearLayout
+        android:id="@+id/linear_pay_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_online"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@mipmap/ic_button_click_bg"
+            android:text="线上支付"
+            android:textColor="#ff4242"/>
+
+        <Button
+            android:id="@+id/btn_line"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginLeft="8dp"
+            android:background="@mipmap/ic_button_bg"
+            android:text="线下支付"
+            android:textColor="#393939"/>
+
+        <Button
+            android:id="@+id/btn_account"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginLeft="8dp"
+            android:background="@mipmap/ic_button_bg"
+            android:text="帐期支付"
+            android:textColor="#393939"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/view_line_bg"></TextView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/db_48"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="发票信息"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/view_line_bg"></TextView>
+
+    <LinearLayout
+        android:id="@+id/linear_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_no_need"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@mipmap/ic_button_click_bg"
+            android:text="不需要"
+            android:textColor="#ff4242"/>
+
+        <Button
+            android:id="@+id/btn_common"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginLeft="8dp"
+            android:background="@mipmap/ic_button_bg"
+            android:text="普通发票"
+            android:textColor="#393939"/>
+
+        <Button
+            android:id="@+id/btn_increment"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginLeft="8dp"
+            android:background="@mipmap/ic_button_bg"
+            android:text="增值税发票"
+            android:textColor="#393939"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_invoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="#fffde2"
+        android:padding="8dp"
+        android:text="你已经选择不开具发票！"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/view_line_bg"></TextView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tv_discount_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="优惠金额：¥0.00"
+        android:textColor="#696969"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_integral"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="赠送积分：0"
+        android:textColor="#696969"
+        android:textSize="16sp"/>
+
+</LinearLayout>

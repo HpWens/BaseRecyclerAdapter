@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">ECRBTB</string>
+
+    <string name="notifyTitle">提示</string>
+    <string name="notifyMsg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
+
+    <string name="load_error">点击重试</string>
+
+    <string name="account">帐号</string>
+    <string name="password">密码</string>
+    <string name="sign_in">登录</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="what_code">什么是商户代码？</string>
+    <string name="rwx_support">任我行电商技术支持</string>
+    <string name="empty">输入的商户代码、用户名、密码不能为空</string>
+    <string name="password_alert">请输入正确的密码</string>
+    <string name="login_failed">登录失败</string>
+    <string name="code_alert">代码，指店铺入驻时自己填写的或者系统分配的唯一标识，如：YXP，注意代码可以由字母和数字组成。</string>
+
+    <string name="home">首页</string>
+    <string name="category">类目</string>
+    <string name="quick_order">快速下单</string>
+    <string name="shopping_cart">进货车</string>
+    <string name="merchant_center">商户中心</string>
+
+    <string name="all_selection">全选</string>
+    <string name="amount">金额：¥ 0.00</string>
+    <string name="settlement">结算(0)</string>
+
+    <string name="product_info">原装进口澳洲</string>
+
+    <string name="server_exception">服务器返回异常!</string>
+    <string name="hint_search_bar">输入名称/条码/编号/品牌</string>
+
+    <string name="search">搜索</string>
+    <string name="transition_goods">transition_goods</string>
+
+    <string name="server_error">获取数据失败!</string>
+    <string name="empty_data">数据为空不能加入购物车</string>
+    <string name="empty_num">数量为0不能加入购物车</string>
+    <string name="empty_order">商品数量为0不能进行采购</string>
+    <string name="empty_shopping_cart">进货车是空的，搞快去采购吧</string>
+
+    <string name="num_less_one">不能低于最少起批量</string>
+
+    <string name="commit_order">提交订单</string>
+    <string name="select_address">选择收货地址</string>
+
+    <string name="detail">详情</string>
+    <string name="discover">发现(Fragment+ViewPager嵌套)</string>
+    <string name="shop">商店(Fragment嵌套)</string>
+    <string name="system">系统</string>
+    <string name="swipe">侧滑返回Sample</string>
+    <string name="go_swipe_back">SwipeBackActivity+Fragment</string>
+    <string name="go_swipe_back_f">SwipeBackFragment</string>
+
+</resources>
