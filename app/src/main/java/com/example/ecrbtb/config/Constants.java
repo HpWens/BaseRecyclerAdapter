@@ -54,10 +54,10 @@ public class Constants {
     public static final String COMMODITY_PRODUCT_URL = "Route.axd?method=vast.order.trade.oftenbuyproducts&format=Json";
 
     //长购订单点击详情
-    public static final String PURCHASE_DETAIL_URL = "WebStore/Supplier/orderInfo.aspx?oddNumber=MTcwMjA3MTQ1NDI2OTQ2NQ==";
+    public static final String PURCHASE_DETAIL_URL = "WebStore/Supplier/orderInfo.aspx?oddNumber=";
 
     //获取默认地址ID
-    public static final String GOODS_RECEIPT_URL = "";
+    public static final String GOODS_RECEIPT_URL = "Route.axd?method=vast.store.address.get&format=Json";
 
     //获取地址列表数据
     public static final String ADDRESS_LIST_URL = "Route.axd?method=vast.store.address.list&format=Json";
@@ -162,5 +162,12 @@ public class Constants {
     //商户web地址
     public static final String MERCHANT_URL = "merchant_url";
 
+    //线上支付
+    public static final String ONLINE_PAY = "/OrderSuccess.aspx?OddNumber=";
 
+    //商品数据
+    public static final String PRODUCT_DATA = "product_data";
+
+    //商品索引位置
+    public static final String PRODUCT_POSITION = "product_position";
 }

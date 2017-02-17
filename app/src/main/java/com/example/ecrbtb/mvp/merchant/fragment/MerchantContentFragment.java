@@ -50,7 +50,7 @@ public class MerchantContentFragment extends BaseFragment {
 
     public static final int MANAGER_TYPE = 1;
 
-    public static final String BASE_URL = "http://m.test.366ec.net/";
+    public static final String BASE_URL = Constants.PAY_BASE_URL;
 
     int type = 0;
 
@@ -69,13 +69,36 @@ public class MerchantContentFragment extends BaseFragment {
             , "1", "Webstore/Order/Extract.aspx",
             "Webstore/Finance/ReceiveCash.aspx", "0"};
 
-    private String[] mManagerNames = new String[]{"我要采购", "采购订单"
-            , "采购授信", "采购积分", "采购清单", "退出登录"};
+    //采购管理
+    private String[] mManagerNames = {"我要采购", "采购订单", "返修/退换货",
+            "采购授信", "采购积分", "采购清单", "退出登录"};
 
     //2 我要采购
-    private String[] mManagerUrl = new String[]{"2", "Webstore/Supplier/OrderList.aspx"
-            , "Webstore/Credit/MyCredit.aspx", "Webstore/Integral/MyIntegral.aspx"
-            , "Webstore/Supplier/OftenBuyList.aspx", "0"};
+    private String[] mManagerUrl = new String[]{"2", "Webstore/Supplier/OrderList.aspx",
+            "Webstore/Order/Retreat.aspx", "Webstore/Credit/MyCredit.aspx",
+            "Webstore/Integral/MyIntegral.aspx", "Webstore/Supplier/OftenBuyList.aspx",
+            "0"};
+
+    //采购管理图标
+    private int[] mPurchaseIcons = {R.mipmap.ic_purchase_36dp,
+            R.mipmap.ic_purchase_order_36dp,
+            R.mipmap.ic_purchase_repair_36dp,
+            R.mipmap.ic_purchase_credit_36dp,
+            R.mipmap.ic_purchase_integral_36dp,
+            R.mipmap.ic_purchase_inventory_36dp,
+            R.mipmap.ic_exit_36dp};
+
+
+    //销售管理图标
+    private int[] mSaleIcons = {R.mipmap.ic_sale_order_36dp,
+            R.mipmap.ic_sale_income_36dp,
+            R.mipmap.ic_sale_member_36dp,
+            R.mipmap.ic_sale_setting_36dp,
+            R.mipmap.ic_sale_preview_36dp,
+            R.mipmap.ic_sale_cash_36dp,
+            R.mipmap.ic_sale_verification_36dp,
+            R.mipmap.ic_sale_line_36dp,
+            R.mipmap.ic_exit_36dp};
 
     public static MerchantContentFragment newInstance(int type) {
 
@@ -228,7 +251,7 @@ public class MerchantContentFragment extends BaseFragment {
         for (int i = 0; i < mSaleNames.length; i++) {
             Merchant merchant = new Merchant();
             merchant.Name = mSaleNames[i];
-            merchant.Icon = R.mipmap.ic_merchant;
+            merchant.Icon = mSaleIcons[i];
             merchant.Url = mSaleUrl[i];
             merchants.add(merchant);
         }
@@ -242,7 +265,7 @@ public class MerchantContentFragment extends BaseFragment {
         for (int i = 0; i < mManagerNames.length; i++) {
             Merchant merchant = new Merchant();
             merchant.Name = mManagerNames[i];
-            merchant.Icon = R.mipmap.ic_merchant;
+            merchant.Icon = mPurchaseIcons[i];
             merchant.Url = mManagerUrl[i];
             merchants.add(merchant);
         }

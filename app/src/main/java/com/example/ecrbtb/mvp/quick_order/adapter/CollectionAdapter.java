@@ -160,16 +160,16 @@ public class CollectionAdapter extends BaseQuickAdapter<Product, BaseViewHolder>
      */
     public interface OnCollectionListener {
 
-        public void onStartLogin();
+        void onStartLogin();
 
-        public void onAddProduct();
+        void onAddProduct();
 
-        public void onSubProduct();
+        void onSubProduct();
 
-        public void onStartDetail(Product product);
+        void onStartDetail(Product product);
 
         //pos  返回更新数据
-        public void onStartGoods(int position, Product product);
+        void onStartGoods(int position, Product product);
     }
 
     /**

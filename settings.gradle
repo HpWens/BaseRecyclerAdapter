@@ -1,1 +1,1 @@
-include ':app', ':library', ':tint', ':convenientbanner', ':sweet', ':pickerview'
+include ':app', ':library', ':tint', ':convenientbanner', ':sweet', ':pickerview', ':zxing'

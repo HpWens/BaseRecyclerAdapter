@@ -21,7 +21,7 @@ public class MainBiz extends BaseBiz {
 
     public static MainBiz getInstance(Context ctx) {
         if (ctx != null) {
-            mContext = ctx.getApplicationContext();
+            mContext = ctx;
         }
         return MainBiz.SingletonHolder.INSTANCE;
     }

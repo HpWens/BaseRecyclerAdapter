@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,15 +21,20 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.example.ecrbtb.BaseActivity;
 import com.example.ecrbtb.BasePresenter;
 import com.example.ecrbtb.MyApplication;
+import com.example.ecrbtb.PermissionsActivity;
 import com.example.ecrbtb.R;
 import com.example.ecrbtb.config.Constants;
+import com.example.ecrbtb.mvp.merchant.listener.JsCallBackListener;
+import com.example.ecrbtb.mvp.merchant.listener.JsInterfaceListener;
 import com.example.ecrbtb.mvp.merchant.presenter.MerchantPresenter;
 import com.example.ecrbtb.utils.StringUtils;
 import com.grasp.tint.SystemBarTintManager;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +48,7 @@ import static android.view.KeyEvent.KEYCODE_BACK;
  * Created by boby on 2016/12/30.
  */
 
-public class MerchantWebActivity extends BaseActivity {
+public class MerchantWebActivity extends PermissionsActivity {
 
 
     @InjectView(R.id.toolbar)
@@ -54,7 +60,18 @@ public class MerchantWebActivity extends BaseActivity {
 
     private String mLoadUrl;
 
+    public static final int REQUEST_CODE = 111;
+
     private MerchantPresenter mPresenter;
+
+    private String mCallZxingFunction = "";
+
+    //是否添加js代码
+    private boolean mIsAddJsCode = true;
+
+    //申请摄像头的权限
+    protected String[] cameraNeedPermissions = {
+            "android.permission.CAMERA"};
 
     @Override
     protected void initView(ViewDataBinding bind) {
@@ -140,6 +157,10 @@ public class MerchantWebActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                if (mIsAddJsCode) {
+                    mIsAddJsCode = false;
+                    mWebView.loadUrl("javascript:" + "function JsOpenScanFunction(s) {\n    window.JsInterface.JsOpenScanFunction(s);\n}");
+                }
             }
 
             @Override
@@ -212,6 +233,18 @@ public class MerchantWebActivity extends BaseActivity {
                 mToolbar.setTitle(title);
             }
         });
+
+        mWebView.addJavascriptInterface(new JsInterfaceListener(new JsCallBackListener() {
+            @Override
+            public void openScan(String resultFunction) {
+                mCallZxingFunction = resultFunction;
+                if (!mayRequestPermission(cameraNeedPermissions)) {
+                    return;
+                }
+                openZxingScan();
+            }
+        }), "JsInterface");
+
     }
 
     @Override
@@ -228,7 +261,7 @@ public class MerchantWebActivity extends BaseActivity {
         if (intent != null) {
             mLoadUrl = intent.getStringExtra(Constants.MERCHANT_URL);
             if (StringUtils.isEmpty(mLoadUrl))
-                mLoadUrl = Constants.BASE_URL;
+                mLoadUrl = Constants.PAY_BASE_URL + Constants.HOME_URL;
         }
     }
 
@@ -266,7 +299,6 @@ public class MerchantWebActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mWebView.destroy();
-
     }
 
     /**
@@ -311,4 +343,40 @@ public class MerchantWebActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void requestPermissionResult(boolean allowPermission) {
+        if (allowPermission) {
+            openZxingScan();
+        }
+    }
+
+    //打开二维码扫描界面
+    public void openZxingScan() {
+        startActivityForResult(new Intent(this, CaptureActivity.class), REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == REQUEST_CODE) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    mWebView.loadUrl("javascript:" + mCallZxingFunction + "(" + result + ")");
+                    //Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    Toast.makeText(this, "解析二维码失败", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+    }
 }

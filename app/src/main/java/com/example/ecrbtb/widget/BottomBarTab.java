@@ -62,16 +62,18 @@ public class BottomBarTab extends FrameLayout {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
         mIcon.setImageResource(icon);
         mIcon.setLayoutParams(params);
-        mIcon.setColorFilter(ContextCompat.getColor(context, R.color.tab_unselect));
+        //mIcon.setColorFilter(ContextCompat.getColor(context, R.color.tab_unselect));
+        mIcon.setColorFilter(Color.parseColor("#666666"));
         lLContainer.addView(mIcon);
 
         mTvTitle = new TextView(context);
         mTvTitle.setText(title);
         LinearLayout.LayoutParams paramsTv = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsTv.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
-        mTvTitle.setTextSize(10);
+        mTvTitle.setTextSize(8);
         mTvTitle.setTextColor(ContextCompat.getColor(context, R.color.tab_unselect));
         mTvTitle.setLayoutParams(paramsTv);
+        mTvTitle.setTextColor(Color.parseColor("#666666"));
         lLContainer.addView(mTvTitle);
 
         addView(lLContainer);
@@ -98,11 +100,17 @@ public class BottomBarTab extends FrameLayout {
     public void setSelected(boolean selected) {
         super.setSelected(selected);
         if (selected) {
-            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.colorPrimary));
-            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+//            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.colorPrimary));
+//            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+
+            mIcon.setColorFilter(Color.parseColor("#F66969"));
+            mTvTitle.setTextColor(Color.parseColor("#F66969"));
         } else {
-            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.tab_unselect));
-            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.tab_unselect));
+//            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.tab_unselect));
+//            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.tab_unselect));
+
+            mIcon.setColorFilter(Color.parseColor("#666666"));
+            mTvTitle.setTextColor(Color.parseColor("#666666"));
         }
     }
 

@@ -2,55 +2,70 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:fresco="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:padding="16dp"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="16dp">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/simple_view"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
         fresco:actualImageScaleType="focusCrop"
         fresco:fadeDuration="300"
-        android:layout_marginLeft="16dp"
         fresco:failureImage="@drawable/ic_img_profile_bg"
         fresco:placeholderImage="@drawable/ic_img_profile_bg"
         fresco:roundAsCircle="true"
         fresco:roundingBorderColor="#FFFFFF"
-        fresco:roundingBorderWidth="1dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        fresco:roundingBorderWidth="1dp"/>
 
     <LinearLayout
-        android:layout_toRightOf="@+id/simple_view"
         android:id="@+id/linear_info"
         android:layout_width="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/simple_view"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="纤衣佰秀专营店"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:id="@+id/textView3"/>
+            android:text="***"
+            android:textColor="#333333"
+            android:textSize="18sp"/>
 
         <TextView
+            android:id="@+id/tv_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:lineSpacingExtra="2dp"
-            android:text="商户代码：1\n所属行业：食品行业\n商户地址：四川省成都市中和红树湾2期10栋\n操作账号：cx"
-            android:textSize="16sp"
-            />
+            android:text="商户代码：*\n所属行业：**"
+            android:textSize="16sp"/>
 
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="2"
+            android:text="商户地址：***"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="2dp"
+            android:text="操作账号：****"
+            android:textSize="16sp"/>
 
     </LinearLayout>
-
-
 
 
 </RelativeLayout>

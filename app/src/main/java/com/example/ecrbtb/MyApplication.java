@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import com.example.ecrbtb.receiver.NetworkConnectChangedReceiver;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import org.xutils.BuildConfig;
 import org.xutils.x;
@@ -72,6 +73,7 @@ public class MyApplication extends Application {
 
         initFresco();
 
+        ZXingLibrary.initDisplayOpinion(this);
     }
 
     private void initFresco() {

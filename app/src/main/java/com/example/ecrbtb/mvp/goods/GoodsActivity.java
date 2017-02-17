@@ -230,6 +230,7 @@ public class GoodsActivity extends BaseActivity implements IGoodsView {
                     return;
                 }
                 mPresenter.joinShoppingCart(mProduct.ProductId, mProduct.SupplierId, mAdapter.getData());
+                showToast("商品已加入进货车");
                 break;
         }
     }

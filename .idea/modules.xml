@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/pickerview/pickerview.iml" filepath="$PROJECT_DIR$/pickerview/pickerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/sweet/sweet.iml" filepath="$PROJECT_DIR$/sweet/sweet.iml" />
       <module fileurl="file://$PROJECT_DIR$/tint/tint.iml" filepath="$PROJECT_DIR$/tint/tint.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zxing/zxing.iml" filepath="$PROJECT_DIR$/zxing/zxing.iml" />
     </modules>
   </component>
 </project>

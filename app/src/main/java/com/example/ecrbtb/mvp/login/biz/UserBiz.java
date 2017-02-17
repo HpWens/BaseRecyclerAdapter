@@ -98,6 +98,7 @@ public class UserBiz extends BaseBiz implements IUserBiz {
                                     //更新登录状态
                                     prefer.edit().putInt(Constants.STORE_ID, Integer.parseInt(store.Id)).commit();
                                     prefer.edit().putString(Constants.TOKEN, manager.Token).commit();
+                                    prefer.edit().putInt(Constants.MANAGER_ID, manager.ManagerId).commit();
 
                                     db.dropTable(Product.class);
                                     db.dropTable(Goods.class);

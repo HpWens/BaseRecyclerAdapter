@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.example.ecrbtb.BaseActivity;
 import com.example.ecrbtb.BasePageFragment;
 import com.example.ecrbtb.BasePresenter;
+import com.example.ecrbtb.MyApplication;
 import com.example.ecrbtb.R;
 import com.example.ecrbtb.config.Constants;
 import com.example.ecrbtb.event.LoginSuccessEvent;
@@ -151,6 +152,10 @@ public class FirstCategoryFragment extends BasePageFragment implements ICategory
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                if (!MyApplication.getInstance().isConnected()) {
+                    mRefreshLayout.setRefreshing(false);
+                    return;
+                }
                 mProductAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
                 mCurrentPage = 1;
                 requestProductData(false);
@@ -191,7 +196,7 @@ public class FirstCategoryFragment extends BasePageFragment implements ICategory
 //                        R.anim.bottom_enter, 0);
 //                ActivityCompat.startActivity(_mActivity, intent, compat.toBundle());
                 _mActivity.startActivity(intent);
-                _mActivity.overridePendingTransition(R.anim.bottom_enter,0);
+                _mActivity.overridePendingTransition(R.anim.bottom_enter, 0);
             }
 
             @Override

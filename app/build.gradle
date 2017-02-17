@@ -96,5 +96,8 @@ dependencies {
 
     //pickerview
     compile project(path: ':pickerview')
+
+    //zxing
+    compile project(path: ':zxing')
 }
 

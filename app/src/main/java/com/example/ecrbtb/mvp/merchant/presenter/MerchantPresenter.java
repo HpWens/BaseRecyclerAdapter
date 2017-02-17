@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.TypedValue;
 
 import com.example.ecrbtb.BasePresenter;
+import com.example.ecrbtb.mvp.login.bean.Manager;
+import com.example.ecrbtb.mvp.login.bean.Store;
 import com.example.ecrbtb.mvp.merchant.biz.MerchantBiz;
 
 /**
@@ -29,4 +31,17 @@ public class MerchantPresenter implements BasePresenter {
     public int dip2px(Context context, float dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
+
+    public Manager getManagerById() {
+        return this.mMerchantBiz.getManagerById(mMerchantBiz.getManagerId());
+    }
+
+    public Store getStoreById() {
+        return this.mMerchantBiz.getStoreById(mMerchantBiz.getStoreId());
+    }
+
+    public boolean isLogin() {
+        return this.mMerchantBiz.isLogin();
+    }
+
 }

@@ -96,11 +96,11 @@ public class MainFragment extends BaseFragment implements IHomeView {
 
         mHomePresenter = new HomePresenter(this);
 
-        mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_home_white_24dp, getString(R.string.home)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_discover_white_24dp, getString(R.string.category)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_message_white_24dp, getString(R.string.quick_order)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_account_circle_white_24dp, getString(R.string.shopping_cart)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_settings_white_24dp, getString(R.string.merchant_center)));
+        mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_home_24dp, getString(R.string.home)))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_category_24dp, getString(R.string.category)))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_quick_order_24dp, getString(R.string.quick_order)))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_cart_24dp, getString(R.string.shopping_cart)))
+                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_merchant_24dp, getString(R.string.merchant_center)));
 
         mBottomBar.getItem(3).setUnreadCount(mHomePresenter.getShoppingCartNum());
 
