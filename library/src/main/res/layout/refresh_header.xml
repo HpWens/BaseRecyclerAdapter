@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="bottom">
 
     <RelativeLayout
-        android:id="@+id/listview_header_content"
+        android:id="@+id/fl_header_content"
         android:layout_width="fill_parent"
-        android:layout_height="64dp"
-        android:paddingTop="10dip">
+        android:layout_height="40dp"
+        android:gravity="bottom">
 
         <LinearLayout
-            android:id="@+id/listview_header_text"
+            android:id="@+id/linear_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:gravity="center"
+            android:gravity="bottom|center_horizontal"
             android:orientation="horizontal">
 
-            <com.github.library.widget.RefreshView
-                android:id="@+id/refresh_view"
+            <ImageView
+                android:id="@+id/iv_refresh"
+                android:scaleType="fitXY"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:src="@drawable/pull_down"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
-                android:layout_toLeftOf="@id/listview_header_text"/>
+                android:layout_marginRight="8dp"/>
 
             <TextView
-                android:id="@+id/refresh_status_tv"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/tv_status"
                 android:textColor="#999999"
                 android:textSize="12sp"
+                android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="下拉刷新"/>
+                android:text="下拉有惊喜~"/>
 
 
 

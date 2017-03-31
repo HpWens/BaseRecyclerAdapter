@@ -94,11 +94,11 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
     public static final int HEADER_VIEW = 0x00000111;
     public static final int LOADING_VIEW = 0x00000222;
     public static final int FOOTER_VIEW = 0x00000333;
-    public static final int EMPTY_VIEW = 0x00000555;
+    public static final int EMPTY_VIEW = 0x00000444;
 
-    public static final int TRANS_0_VIEW = 0x00001318;
-    public static final int TRANS_1_VIEW = 0x00001319;
-    public static final int TRANS_2_VIEW = 0x00001320;
+    public static final int TRANS_0_VIEW = 0x00000555;
+    public static final int TRANS_1_VIEW = 0x00000666;
+    public static final int TRANS_2_VIEW = 0x00000777;
 
     /**
      * Use with {@link #openLoadAnimation}

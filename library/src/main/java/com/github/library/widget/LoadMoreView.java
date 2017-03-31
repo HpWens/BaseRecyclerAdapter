@@ -21,7 +21,7 @@ import com.github.library.util.ScreenUtils;
  * Created by boby on 2016/12/11.
  */
 
-public class RefreshView extends View {
+public class LoadMoreView extends View {
 
     private Context mContext;
 
@@ -35,15 +35,15 @@ public class RefreshView extends View {
 
     private int mIndicatorColor;
 
-    public RefreshView(Context context) {
+    public LoadMoreView(Context context) {
         this(context, null);
     }
 
-    public RefreshView(Context context, AttributeSet attrs) {
+    public LoadMoreView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RefreshView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LoadMoreView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }

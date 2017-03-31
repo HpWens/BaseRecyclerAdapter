@@ -5,9 +5,7 @@ import android.support.annotation.LayoutRes;
 
 import com.github.library.BaseQuickAdapter;
 import com.github.library.BaseViewHolder;
-import com.github.library.R;
 import com.github.library.indicator.LoadMoreType;
-import com.github.library.widget.RefreshView;
 
 
 /**
@@ -40,7 +38,6 @@ public abstract class LoadMoreView {
                 visibleLoading(holder, true);
                 visibleLoadFail(holder, false);
                 visibleLoadEnd(holder, false);
-                startRefreshAnimator(holder);
                 break;
             case STATUS_FAIL:
                 visibleLoading(holder, false);
@@ -55,17 +52,6 @@ public abstract class LoadMoreView {
         }
     }
 
-    private void startRefreshAnimator(BaseViewHolder holder) {
-        RefreshView refreshView = (RefreshView) holder.itemView.findViewById(R.id.load_more);
-        if (refreshView != null) {
-            refreshView.setIndicatorId(mLoadingIndicator);
-            if (mLoadingIndicator == LoadMoreType.APAY) {
-                refreshView.setIsDrawArrow(false);
-                refreshView.setProgress(100);
-            }
-            refreshView.startAnimator();
-        }
-    }
 
     public void setLoadingIndicator(@LoadMoreType int loadMoreType) {
         this.mLoadingIndicator = loadMoreType;
