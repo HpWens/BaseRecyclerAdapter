@@ -37,11 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="下拉有惊喜~"/>
 
-
-
         </LinearLayout>
-
-
 
     </RelativeLayout>
 

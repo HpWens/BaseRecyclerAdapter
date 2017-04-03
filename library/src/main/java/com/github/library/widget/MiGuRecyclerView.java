@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -14,6 +15,7 @@ import com.github.library.BaseQuickAdapter;
 import com.github.library.listener.AppBarStateChangeListener;
 
 import static com.github.library.listener.BaseRefreshListener.STATE_REFRESHING;
+import static com.github.library.listener.BaseRefreshListener.STATE_RELEASE_TO_REFRESH;
 
 /**
  * Created by boby on 2017/3/31.
@@ -30,6 +32,8 @@ public class MiGuRecyclerView extends RecyclerView {
     private RefreshListener mRefreshListener;
 
     private float mLastY = -1;
+
+    private boolean isScrollTop = true;
 
     private static final float DRAG_RATE = 2;
 
@@ -96,19 +100,18 @@ public class MiGuRecyclerView extends RecyclerView {
                 if (mRefreshAdapter != null) {
                     final float deltaY = ev.getRawY() - mLastY;
                     mLastY = ev.getRawY();
-                    if (isOnTop() && pullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                    if (isScrollTop && isOnTop() && pullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                         mMiGuRefreshHeader.onMove(deltaY / DRAG_RATE);
                         if (mMiGuRefreshHeader.getVisibleHeight() > 0 && mMiGuRefreshHeader.getState() < MiGuRefreshHeader.STATE_REFRESHING) {
                             return false;
                         }
                     }
-
                 }
                 break;
             default:
                 if (mRefreshAdapter != null) {
                     mLastY = -1; // reset
-                    if (isOnTop() && pullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
+                    if (isScrollTop && isOnTop() && pullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
                         if (mMiGuRefreshHeader.releaseAction()) {
                             if (mRefreshListener != null) {
                                 mRefreshListener.onRefresh();
@@ -117,8 +120,6 @@ public class MiGuRecyclerView extends RecyclerView {
                     }
                 }
                 break;
-
-
         }
 
         return super.onTouchEvent(ev);
@@ -131,6 +132,37 @@ public class MiGuRecyclerView extends RecyclerView {
         return false;
     }
 
+    @Override
+    public void onScrolled(int dx, int dy) {
+        super.onScrolled(dx, dy);
+        if (mRefreshAdapter != null && pullRefreshEnabled) {
+            if (mMiGuRefreshHeader.getState() == STATE_RELEASE_TO_REFRESH || mMiGuRefreshHeader.getState() == STATE_REFRESHING) {
+                isScrollTop = true;
+            } else {
+                //处理线性
+                LayoutManager lm = getLayoutManager();
+                if (lm instanceof LinearLayoutManager) {
+                    LinearLayoutManager llm = (LinearLayoutManager) lm;
+
+                    int position = llm.findFirstCompletelyVisibleItemPosition();
+
+                    if (mRefreshAdapter.getHeaderLayout().getChildCount() == 1) {
+                        if (position == 1 || position == 0) {
+                            isScrollTop = true;
+                        } else {
+                            isScrollTop = false;
+                        }
+                    } else {
+                        if (position == 0) {
+                            isScrollTop = true;
+                        } else {
+                            isScrollTop = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     protected void onAttachedToWindow() {
@@ -164,7 +196,6 @@ public class MiGuRecyclerView extends RecyclerView {
             }
         }
     }
-
 
     public interface RefreshListener {
         void onRefresh();

@@ -710,6 +710,18 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
         }
     }
 
+    private boolean isHeader(int position) {
+        if (mHeaderLayout != null) {
+            return position >= 1 && position < mHeaderLayout.getChildCount() + 1;
+        }
+        return false;
+    }
+
+    private boolean isRefreshHeader(int position) {
+        return position == 0;
+    }
+
+
     protected K onCreateDefViewHolder(ViewGroup parent, int viewType) {
         return createBaseViewHolder(parent, mLayoutResId);
     }

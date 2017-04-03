@@ -1,10 +1,13 @@
 package com.github.library.loadmore;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.widget.ImageView;
 
 import com.github.library.BaseQuickAdapter;
 import com.github.library.BaseViewHolder;
+import com.github.library.R;
 import com.github.library.indicator.LoadMoreType;
 
 
@@ -38,6 +41,9 @@ public abstract class LoadMoreView {
                 visibleLoading(holder, true);
                 visibleLoadFail(holder, false);
                 visibleLoadEnd(holder, false);
+                //开启动画
+                ImageView mIvLoadMore = holder.getView(R.id.iv_load_more);
+                ((AnimationDrawable) mIvLoadMore.getDrawable()).start();
                 break;
             case STATUS_FAIL:
                 visibleLoading(holder, false);

@@ -12,20 +12,26 @@
         android:orientation="horizontal"
         android:visibility="visible">
 
-        <ProgressBar
-            android:id="@+id/load_more"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="@dimen/dp_4"/>
-
-        <TextView
-            android:id="@+id/loading_text"
+        <ImageView
+            android:id="@+id/iv_load_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_4"
-            android:text="@string/loading"
-            android:textColor="#999999"
-            android:textSize="@dimen/sp_14"/>
+            android:src="@drawable/load_more"/>
+
+        <!--<ProgressBar-->
+            <!--android:id="@+id/load_more"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_marginRight="@dimen/dp_4"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/loading_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dp_4"-->
+            <!--android:text="@string/loading"-->
+            <!--android:textColor="#999999"-->
+            <!--android:textSize="@dimen/sp_14"/>-->
     </LinearLayout>
 
     <FrameLayout

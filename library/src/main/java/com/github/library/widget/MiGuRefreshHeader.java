@@ -47,6 +47,9 @@ public class MiGuRefreshHeader extends LinearLayout implements BaseRefreshListen
         initView();
     }
 
+    /**
+     * 初始化 View
+     */
     private void initView() {
 
         // 初始情况，设置下拉刷新view高度为0
@@ -56,17 +59,17 @@ public class MiGuRefreshHeader extends LinearLayout implements BaseRefreshListen
         this.setLayoutParams(lp);
         this.setPadding(0, 0, 0, 0);
 
-
         addView(mContainer, new LayoutParams(LayoutParams.MATCH_PARENT, 0));
         setGravity(Gravity.BOTTOM);
 
+        //图片控件
         mMiGuImageView = (ImageView) findViewById(R.id.iv_refresh);
+        //文本控件
         mStatusTextView = (TextView) findViewById(R.id.tv_status);
 
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mMeasureHeight = getMeasuredHeight();
+        mMeasureHeight = getMeasuredHeight();//获取控件高度 默认 40dp 由于测试机密度为 3 所以像素为 120px
     }
-
 
     public void setMiGuImageView(int resId) {
         mMiGuImageView.setImageResource(resId);
@@ -76,40 +79,30 @@ public class MiGuRefreshHeader extends LinearLayout implements BaseRefreshListen
         if (state == mState) return;
 
         if (state == STATE_NORMAL) {
+            //下拉
             mMiGuImageView.setImageResource(R.drawable.pull_down);
+            mStatusTextView.setText(R.string.pull_refresh);
         } else if (state == STATE_RELEASE_TO_REFRESH) {
+            //释放
             mMiGuImageView.setImageResource(R.drawable.pull_end);
+            mStatusTextView.setText(R.string.release_refresh);
         } else if (state == STATE_REFRESHING) {
+            //刷新
+            mStatusTextView.setText(R.string.refreshing);
             mMiGuImageView.setImageResource(R.drawable.refreshing);
             mMiGuDrawable = (AnimationDrawable) mMiGuImageView.getDrawable();
+            //播放动画
             mMiGuDrawable.start();
 
             smoothScrollTo(mMeasureHeight);
         } else if (state == STATE_DONE) {
+            //完成
             if (mMiGuDrawable != null)
+                //停止动画
                 mMiGuDrawable.stop();
         }
 
-        switch (state) {
-            case STATE_NORMAL:
-
-                mStatusTextView.setText(R.string.pull_refresh);
-                break;
-            case STATE_RELEASE_TO_REFRESH:
-
-                mStatusTextView.setText(R.string.release_refresh);
-                break;
-            case STATE_REFRESHING:
-
-                mStatusTextView.setText(R.string.refreshing);
-                break;
-            case STATE_DONE:
-                break;
-            default:
-        }
-
         mState = state;
-
     }
 
     public int getState() {
@@ -179,12 +172,13 @@ public class MiGuRefreshHeader extends LinearLayout implements BaseRefreshListen
         }
 
         if (getVisibleHeight() > mMeasureHeight && mState < STATE_REFRESHING) {
+            //刷新状态
             setState(STATE_REFRESHING);
             isOnRefresh = true;
         }
 
         if (mState == STATE_REFRESHING && height <= mMeasureHeight) {
-
+            //处于刷新状态，手指还在向上滑动
         }
 
         if (mState != STATE_REFRESHING) {
