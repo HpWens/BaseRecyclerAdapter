@@ -4,7 +4,7 @@ RecyclerView 是Android L版本中新添加的一个用来取代ListView的SDK�
 
 看到这里你肯定会有疑问，通用适配（BaseRecyclerAdapter），它具体能够做些什么呢，或者说它都有哪些功能？
 
-##一、BaseRecyclerAdapter 简介
+## 一、BaseRecyclerAdapter 简介
 
 -  优化Adapter代码
 
@@ -56,7 +56,7 @@ compile 'com.github.baserecycleradapter:library:1.0.9'
 
 ----------
 
-###添加 Item点击，长按事件
+### 添加 Item点击，长按事件
 
 ```
  mAdapter.setOnRecyclerItemClickListener();
@@ -66,7 +66,7 @@ compile 'com.github.baserecycleradapter:library:1.0.9'
 ![recy](http://img.blog.csdn.net/20160728111739762)
 
 
-###子控件的点击事件
+### 子控件的点击事件
 
 ```
 @Override
@@ -80,7 +80,7 @@ protected void convert(BaseViewHolder helper, String item) {
 
 ```
 
-###添加头部，尾部
+### 添加头部，尾部
 
 ```
 mAdapter.addHeaderView();
@@ -101,7 +101,7 @@ mAdapter.addHeaderView(headerView);
 
 ----------
 
-###添加 Item动画
+### 添加 Item动画
 
 ![recy](http://img.blog.csdn.net/20160728114134232)    
 
@@ -131,7 +131,7 @@ mAdapter.openLoadAnimation(new BaseAnimation[]{
 });
 ```
 
-###设置加载更多
+### 设置加载更多
 
 ```
         mAdapter.openLoadingMore(true);
@@ -196,7 +196,7 @@ mAdapter.openLoadAnimation(new BaseAnimation[]{
 
 ----------
 
-###添加空布局
+### 添加空布局
 
 ```
 View headerView=getLayoutInflater().inflate(R.layout.rv_empty, null);
@@ -209,7 +209,7 @@ mAdapter.addHeaderView(headerView);
 
 ----------
 
-###拖拽和侧滑
+### 拖拽和侧滑
 
 添加以下代码：
 
@@ -229,7 +229,7 @@ mItemTouchHelper.attachToRecyclerView(mRecyclerView);
 
 ----------
 
-###支持不同类型
+### 支持不同类型
 
 ```
 mRecyclerView.setAdapter(mAdapter = new BaseMultiItemAdapter<MultiItem>(this, getMultiItemDatas()) {
